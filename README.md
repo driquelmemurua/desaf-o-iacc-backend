@@ -6,30 +6,24 @@
 
 ## Instalación
 
-1. Crear una copia del archivo `.env.example` y renombrarlo a `.env`
+1. Crear una copia del archivo `.env.example` y renombrarlo a `.env` en el directorio base
 
-2. Correr los siguientes comandos:
+2. Correr los siguientes comandos en la terminal:
 
-```bash
-# Instalar node_modules
-$ npm install
+    ```bash
+    # Instalar node_modules
+    $ npm install
 
-# Ejecutar docker-compose
-$ docker compose up -d --build
-```
+    # Levantar contenedores de docker
+    $ docker compose up -d --build
+    ```
 
-## Build
+3. Probar si se levantó el servicio correctamente con CURL
 
-```bash
-# dev
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# prod
-$ npm run start:prod
-```
+    ```bash
+    # Output: Pong!
+    $ curl --location 'http://localhost:3000/ping'
+    ```
 
 ## Test
 
