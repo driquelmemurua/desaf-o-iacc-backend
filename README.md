@@ -2,12 +2,20 @@
 
 ## Requerimientos
 
-- [docker](https://www.docker.com/products/docker-desktop/)
+- [Docker](https://www.docker.com/products/docker-desktop/)
 
 ## Instalación
 
+1. Crear una copia del archivo `.env.example` y renombrarlo a `.env`
+
+2. Correr los siguientes comandos:
+
 ```bash
+# Instalar node_modules
 $ npm install
+
+# Ejecutar docker-compose
+$ docker compose up -d --build
 ```
 
 ## Build
