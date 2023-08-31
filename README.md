@@ -1,5 +1,9 @@
 # Desafío IACC Backend
 
+## Requerimientos
+
+- [docker](https://www.docker.com/products/docker-desktop/)
+
 ## Instalación
 
 ```bash
