@@ -1,0 +1,24 @@
+config:
+  target: 'http://localhost:3000'
+  phases:
+    - duration: 15
+      arrivalCount: 9
+      name: 'Preparation'
+    - duration: 30
+      arrivalCount: 60
+      name: 'Stress'
+  plugins:
+    ensure: {}
+    apdex: {}
+    metrics-by-endpoint: {}
+  apdex:
+    threshold: 100
+  ensure:
+      thresholds:
+        - http.response_time.p99: 100
+        - http.response_time.p95: 75
+
+scenarios:
+  - flow:
+      - get:
+          url: '/students'

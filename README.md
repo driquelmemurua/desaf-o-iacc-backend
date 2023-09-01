@@ -96,15 +96,9 @@ $ curl --location 'http://localhost:3000/courses/1/students' \
 }'
 ```
 
-## Test
+## Artillery
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+# Test de Artillery a endpoint de estudiantes
+$ npm run artillery:students
 ```
