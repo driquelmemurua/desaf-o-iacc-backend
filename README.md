@@ -102,3 +102,5 @@ $ curl --location 'http://localhost:3000/courses/1/students' \
 # Test de Artillery a endpoint de estudiantes
 $ npm run artillery:students
 ```
+
+![Test de artillery](test/artillery/students.png)
