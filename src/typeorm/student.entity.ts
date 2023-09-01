@@ -1,4 +1,4 @@
-import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Course } from "./course.entity";
 
 @Entity()
@@ -21,7 +21,6 @@ export class Student {
     @Column()
     address: string;
 
-    @ManyToMany(() => Course)
-    @JoinTable()
+    @ManyToMany(() => Course, (course) => course.students)
     courses: Course[];
 }

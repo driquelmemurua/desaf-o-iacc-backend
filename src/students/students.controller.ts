@@ -1,9 +1,10 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
-import { StudentExistsPipe } from './pipes/student-exists.pipe';
 import { CreateStudentDto } from './dto/create-student.dto';
 import { EmptyBodyPipe } from 'src/pipes/empty-body.pipe';
 import { UpdateStudentDto } from './dto/update-student.dto';
 import { StudentsService } from './students.service';
+import { StudentPipe } from './pipes/student.pipe';
+import { Student } from 'src/typeorm';
 
 @Controller('students')
 export class StudentsController {
@@ -15,8 +16,8 @@ export class StudentsController {
     }
 
     @Get(':id')
-    findOne(@Param('id', StudentExistsPipe) id: number) {
-        return this.studentsService.findOne(id);
+    findOne(@Param('id', StudentPipe) student: Student) {
+        return student;
     }
 
     @Post()
@@ -25,12 +26,15 @@ export class StudentsController {
     }
 
     @Patch(':id')
-    update(@Param('id', StudentExistsPipe) id: number, @Body(EmptyBodyPipe) dto: UpdateStudentDto) {
+    update(
+        @Param('id', StudentPipe) { id }: Student,
+        @Body(EmptyBodyPipe) dto: UpdateStudentDto,
+    ) {
         return this.studentsService.update(id, dto);
     }
 
     @Delete(':id')
-    delete(@Param('id', StudentExistsPipe) id: number) {
+    delete(@Param('id', StudentPipe) { id }: Student) {
         return this.studentsService.delete(id);
     }
 }

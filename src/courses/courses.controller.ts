@@ -2,8 +2,12 @@ import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/commo
 import { CoursesService } from './courses.service';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateCourseDto } from './dto/update-course.dto';
-import { CourseExistsPipe } from './pipes/course-exists.pipe';
+import { CoursePipe } from './pipes/course.pipe';
 import { EmptyBodyPipe } from 'src/pipes/empty-body.pipe';
+import { EnrollStudentDto } from './dto/enroll-student.dto';
+import { Course } from 'src/typeorm/course.entity';
+import { StudentPipe } from 'src/students/pipes/student.pipe';
+import { Student } from 'src/typeorm';
 
 @Controller('courses')
 export class CoursesController {
@@ -15,8 +19,8 @@ export class CoursesController {
     }
 
     @Get(':id')
-    findOne(@Param('id', CourseExistsPipe) id: number) {
-        return this.coursesService.findOne(id);
+    findOne(@Param('id', CoursePipe) course: Course) {
+        return course;
     }
 
     @Post()
@@ -25,12 +29,24 @@ export class CoursesController {
     }
 
     @Patch(':id')
-    update(@Param('id', CourseExistsPipe) id: number, @Body(EmptyBodyPipe) dto: UpdateCourseDto) {
+    update(
+        @Param('id', CoursePipe) { id }: Course,
+        @Body(EmptyBodyPipe) dto: UpdateCourseDto,
+    ) {
         return this.coursesService.update(id, dto);
     }
 
     @Delete(':id')
-    delete(@Param('id', CourseExistsPipe) id: number) {
+    delete(@Param('id', CoursePipe) { id }: Course) {
         return this.coursesService.delete(id);
+    }
+
+    @Post(':courseId/students')
+    enrollStudent(
+        @Param('courseId', CoursePipe) course: Course,
+        @Body() _dto: EnrollStudentDto,
+        @Body('studentId', StudentPipe) student: Student,
+    ) {
+        return this.coursesService.enrollStudent(course, student);
     }
 }

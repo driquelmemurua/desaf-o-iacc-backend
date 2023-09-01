@@ -7,6 +7,7 @@ import { Student } from 'src/typeorm';
 @Module({
   imports: [TypeOrmModule.forFeature([Student])],
   controllers: [StudentsController],
-  providers: [StudentsService]
+  providers: [StudentsService],
+  exports: [StudentsService],
 })
 export class StudentsModule {}

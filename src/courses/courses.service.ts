@@ -1,7 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { DeleteResult, Repository, UpdateResult } from 'typeorm';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Course } from 'src/typeorm/course.entity';
-import { DeleteResult, Repository, UpdateResult } from 'typeorm';
+import { Student } from 'src/typeorm';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateCourseDto } from './dto/update-course.dto';
 
@@ -17,7 +18,10 @@ export class CoursesService {
     }
 
     findOne(id: number): Promise<Course | null> {
-        return this.coursesRepository.findOneBy({ id });
+        return this.coursesRepository.findOne({
+            where: { id },
+            relations: ['students'],
+        });
     }
 
     create(dto: CreateCourseDto): Promise<Course> {
@@ -30,5 +34,15 @@ export class CoursesService {
 
     delete(id: number): Promise<DeleteResult> {
         return this.coursesRepository.delete(id);
+    }
+
+    async enrollStudent(course: Course, student: Student) {
+        const courseHasStudent = course.students.filter((courseStudent) => courseStudent.id === student.id).length > 0;
+        if (courseHasStudent)
+            throw new BadRequestException(`Course with id ${course.id} already has enrolled student with id ${student.id}`);
+
+        course.students = [...course.students, student];
+
+        return await this.coursesRepository.save(course);
     }
 }

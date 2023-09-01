@@ -1,5 +1,6 @@
+import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Semester } from "src/constants/semester";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Student } from "./student.entity";
 
 @Entity()
 export class Course {
@@ -20,4 +21,8 @@ export class Course {
 
     @Column()
     campus: string;
+
+    @ManyToMany(() => Student)
+    @JoinTable()
+    students: Student[];
 }
