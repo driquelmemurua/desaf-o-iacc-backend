@@ -1,4 +1,5 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Semester } from "src/constants/semester";
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Course {
@@ -14,8 +15,8 @@ export class Course {
     @Column()
     year: number;
 
-    @Column()
-    semester: number;
+    @Column('int2')
+    semester: Semester;
 
     @Column()
     campus: string;
